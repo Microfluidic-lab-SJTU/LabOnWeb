@@ -9,30 +9,6 @@
 	<h1 class="demo-section-title">Controll Panel</h1>
 	<div class="row demo-row">
 		<div class="col">
-          <div class="form-group">
-            <input type="text" value="" placeholder="Inactive" class="form-control" />
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group has-error">
-            <input type="text" value="" placeholder="Error" class="form-control" />
-          </div>
-        </div>
-	   <div class="col">
-          <h3 class="demo-panel-title">Dropdown</h3>
-
-       <div class="btn-group">
-            <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">Default <span class="caret"></span></button>
-            <ul role="menu" class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-            </ul>
-          </div><!-- /btn-group -->
-        </div> <!-- /.col -->
-        <div class="col">
           <h4 class="demo-panel-title">Select Microscope</h4>
           <select class="form-control select select-primary" id='myselect' data-toggle="select"  onchange='SelectChange()'>
             <option value="0" selected>Microscope one</option>
@@ -41,126 +17,95 @@
             <option value="3">Microscope four</option>
           </select>
         </div> <!-- /.col -->
+		
+		<div class="col">
+		  <h6 class="demo-panel-title">Capture a image</h6>
+          <a href="#fakelink" style="width:50%" class="btn btn-block btn-lg btn-primary">Capture</a>
+		  <h6 class="demo-panel-title">Record a Video </h6>
+		  <input type="checkbox" Unchecked data-toggle="switch" id="custom-switch-03" data-on-text="Start" data-off-text="Stop" />
+        </div>
+        <div class="col-6">
+		  <h3 class="demo-panel-title">Schedule</h3>
+		  <div class="row">
+				<div class="col-4">
+					<input type="checkbox" Unchecked data-toggle="switch" id="custom-switch-03" data-on-text="image" data-off-text="video" />
+				</div>
+				<div class="col-4">
+					<div class="form-group">
+						<input type="text" value="" placeholder="Time interval" class="form-control" />
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="form-group">
+						<input type="text" value="" placeholder="Number of samples" class="form-control" />
+					</div>
+				</div>
+		  </div>
+		  <a href="#fakelink" style="width:40%" class="btn btn-block btn-lg btn-primary">Schedule</a>
+        </div>
+	    <!--div class="col">
+         
+        </div> <!-- /.col -->
 	</div>
-	<div class="row">
-        <div class="col-5">
-          <h3 class="demo-panel-title">Progress bars &amp; Sliders</h3>
-          <div class="progress">
-            <div class="progress-bar" style="width: 45%;"></div>
-          </div>
-          <br/>
-          <div class="progress">
-            <div class="progress-bar" style="width: 40%;"></div>
-            <div class="progress-bar progress-bar-warning" style="width: 10%;"></div>
-            <div class="progress-bar progress-bar-danger" style="width: 10%;"></div>
-            <div class="progress-bar progress-bar-success" style="width: 10%;"></div>
-            <div class="progress-bar progress-bar-info" style="width: 10%;"></div>
-          </div>
-          <br/>
-          <div id="slider" class="ui-slider">
-            <div class="ui-slider-segment"></div>
-            <div class="ui-slider-segment"></div>
-            <div class="ui-slider-segment"></div>
-          </div>
-        </div> <!-- /sliders -->
+	<div class="row demo-row">
+	<h1 class="demo-section-title">Task List</h1>
 	</div>
-	<div class="row">
-        <div class="col">
-          <h3 class="demo-panel-title">Checkboxes</h3>
-          <label class="checkbox" for="checkbox1">
-            <input type="checkbox" value="" id="checkbox1" onchange='CheckboxChange()'data-toggle="checkbox">
-            Unchecked
-          </label>
-          <label class="checkbox" for="checkbox2">
-            <input type="checkbox" checked="checked" value="" id="checkbox2" data-toggle="checkbox" >
-            Unchecked
-          </label>
-          <label class="checkbox" for="checkbox3">
-            <input type="checkbox" value="" id="checkbox3" data-toggle="checkbox">
-            Unchecked<!--Disabled unchecked Checked-->
-          </label>
-          <label class="checkbox" for="checkbox4">
-            <input type="checkbox" checked="checked" value="" id="checkbox4" data-toggle="checkbox">
-			Unchecked
-          </label>
-        </div> <!-- /checkboxes col -->
-
-        <div class="col">
-          <h3 class="demo-panel-title">Radio Buttons</h3>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" data-toggle="radio">
-            Radio is off
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" data-toggle="radio" checked="">
-            Radio is on
-          </label>
-
-          <label class="radio">
-            <input type="radio" name="optionsRadiosDisabled" id="optionsRadios3" value="option2" data-toggle="radio" disabled="">
-            Disabled radio is off
-          </label>
-          <label class="radio">
-            <input type="radio" name="optionsRadiosDisabled" id="optionsRadios4" value="option2" data-toggle="radio" checked="" disabled="">
-            Disabled radio is on
-          </label>
-        </div> <!-- /radios col -->
-
-        <div class="col">
-          <h3 class="demo-panel-title">Switches</h3>
-
+	<div class="row demo-row">
+		  <div class="col-9">
           <table width="100%">
             <tr>
-              <td width="50%" class="pbm">
-                <input type="checkbox" checked data-toggle="switch" id="custom-switch-01" />
+              <td width="30%" class="pbm">
+                  <label class="checkbox" for="checkbox1">
+					<input type="checkbox" value="" id="checkbox1" checked="checked" onchange='CheckboxChange()'data-toggle="checkbox">
+					Task one
+				  </label>
               </td>
-              <td class="pbm">
-                <input type="checkbox" data-toggle="switch" id="custom-switch-02" />
+              <td width="30%" class="pbm">
+                <h6 class="demo-panel-title">Record a Video </h6>
               </td>
-            </tr>
-            <tr>
-              <td class="pbm">
-                <div class="bootstrap-switch-square">
-                  <input type="checkbox" checked data-toggle="switch" id="custom-switch-03" data-on-text="<span class='fui-check'></span>" data-off-text="<span class='fui-cross'></span>" />
-                </div>
-              </td>
-              <td class="pbm">
-                <div class="bootstrap-switch-square">
-                  <input type="checkbox" data-toggle="switch" id="custom-switch-04" />
-                </div>
+			  <td  class="pbm">
+                <<div class="progress">
+					<div class="progress-bar" style="width: 45%;"></div>
+				</div>
               </td>
             </tr>
             <tr>
-              <td>
-                <input type="checkbox" checked disabled data-toggle="switch" id="custom-switch-5" />
+              <td width="30%" class="pbm">
+                  <label class="checkbox" for="checkbox1">
+					<input type="checkbox" value="" id="checkbox1" checked="checked" onchange='CheckboxChange()'data-toggle="checkbox">
+					Task Two
+				  </label>
               </td>
-              <td>
-                <input type="checkbox" checked disabled data-toggle="switch" id="custom-switch-6" />
+              <td width="30%" class="pbm">
+                <h6 class="demo-panel-title">Record a Video </h6>
+              </td>
+			  <td  class="pbm">
+                <<div class="progress">
+					<div class="progress-bar" style="width: 45%;"></div>
+				</div>
+              </td>
+            </tr>
+            <tr>
+              <td width="30%" class="pbm">
+                  <label class="checkbox" for="checkbox1">
+					<input type="checkbox" value="" id="checkbox1" checked="checked" onchange='CheckboxChange()'data-toggle="checkbox">
+					Task Three
+				  </label>
+              </td>
+              <td width="30%" class="pbm">
+                <h6 class="demo-panel-title">Record a Video </h6>
+              </td>
+			  <td  class="pbm">
+                <<div class="progress">
+					<div class="progress-bar" style="width: 45%;"></div>
+				</div>
               </td>
             </tr>
           </table>
-        </div> <!-- /.col -->
-        <div class="col">
-          <h3 class="demo-panel-title">Share</h3>
-          <div class="share mrl">
-            <ul>
-              <li>
-                <label class="share-label" for="share-toggle2">Facebook</label>
-                <input type="checkbox" data-toggle="switch" />
-              </li>
-              <li>
-                <label class="share-label" for="share-toggle4">Twitter</label>
-                <input type="checkbox" checked="" data-toggle="switch" />
-              </li>
-              <li>
-                <label class="share-label" for="share-toggle6">Pinterest</label>
-                <input type="checkbox" data-toggle="switch" />
-              </li>
-            </ul>
-            <a href="#" class="btn btn-primary btn-block btn-large">Share</a>
-          </div> <!-- /share -->
-        </div><!-- /.col -->
-      </div> <!-- /.row -->
+        </div> <!-- /.col-9 -->
+          
+	</div>
+
 {% endblock %}
 {% block user_script %}
 	<script>
