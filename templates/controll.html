@@ -33,14 +33,12 @@
           </div><!-- /btn-group -->
         </div> <!-- /.col -->
         <div class="col">
-          <h3 class="demo-panel-title">Select</h3>
+          <h4 class="demo-panel-title">Select Microscope</h4>
           <select class="form-control select select-primary" id='myselect' data-toggle="select"  onchange='SelectChange()'>
-            <option value="0">Choose hero</option>
-            <option value="1">Spider Man</option>
-            <option value="2">Wolverine</option>
-            <option value="3">Captain America</option>
-            <option value="4" selected>X-Men</option>
-            <option value="5">Crocodile</option>
+            <option value="0" selected>Microscope one</option>
+            <option value="1">Microscope two</option>
+            <option value="2">Microscope three</option>
+            <option value="3">Microscope four</option>
           </select>
         </div> <!-- /.col -->
 	</div>
@@ -173,7 +171,7 @@
             }, function(r) {
                 var obj = JSON.parse(r);
                 if(obj.success == 'true') {
-                    alert(obj.msg);
+                    window.location.reload();
                 }
             });
         }

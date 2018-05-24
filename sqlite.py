@@ -4,10 +4,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import Sequence
 from sqlalchemy.orm import sessionmaker
+from util import process_config
 
-
-db_path='sqlite:////home/stevexiaofei/project/flask-video-streaming-master/data.sqlite'
-engine = create_engine(db_path)
+config=process_config('config.cfg')
+#db_path='sqlite:////home/stevexiaofei/project/flask-video-streaming-master/data.sqlite'
+engine = create_engine(config['databasepath'])
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 

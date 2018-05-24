@@ -57,3 +57,4 @@ target/
 __pycache__/
 /flasky/
 data.sqlite
+*.cfg

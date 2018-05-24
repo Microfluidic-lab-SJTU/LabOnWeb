@@ -1,5 +1,6 @@
 import time
 import threading
+from frames import RemoteFrames,SimuFrames
 try:
     from greenlet import getcurrent as get_ident
 except ImportError:
@@ -56,29 +57,35 @@ class BaseCamera(object):
     frame = None  # current frame is stored here by background thread
     last_access = 0  # time of last client access to the camera
     event = CameraEvent()
-
-    def __init__(self):
+    dicts = {}
+    def __init__(self,addr):
         """Start the background camera thread if it isn't running yet."""
-        if BaseCamera.thread is None:
-            BaseCamera.last_access = time.time()
-
-            # start background frame thread
-            BaseCamera.thread = threading.Thread(target=self._thread)
-            BaseCamera.thread.start()
-
-            # wait until frames are available
+        self.addr = addr
+        print('new camera ,',addr)
+        if BaseCamera.dicts.has_key(addr) is False:
+            frame_generator= SimuFrames if addr[0] == '0.0.0.0' else RemoteFrames
+            thread = threading.Thread(target=self._thread,args=(frame_generator,addr))
+            BaseCamera.dicts[addr]=[thread,None,time.time(),CameraEvent()]
+            thread.start()
+            while self.get_frame() is None:
+                time.sleep(0)
+        elif BaseCamera.dicts[addr][0] == None:
+            frame_generator = SimuFrames if addr[0] == '0.0.0.0' else RemoteFrames
+            BaseCamera.dicts[addr][2] = time.time()
+            BaseCamera.dicts[addr][0] = threading.Thread(target=self._thread,args=(frame_generator,addr))
+            BaseCamera.dicts[addr][0].start()
             while self.get_frame() is None:
                 time.sleep(0)
 
     def get_frame(self):
         """Return the current camera frame."""
-        BaseCamera.last_access = time.time()
+        BaseCamera.dicts[self.addr][2] = time.time()
 
         # wait for a signal from the camera thread
-        BaseCamera.event.wait()
-        BaseCamera.event.clear()
+        BaseCamera.dicts[self.addr][3].wait()
+        BaseCamera.dicts[self.addr][3].clear()
 
-        return BaseCamera.frame
+        return BaseCamera.dicts[self.addr][1]
 
     @staticmethod
     def frames():
@@ -86,19 +93,21 @@ class BaseCamera(object):
         raise RuntimeError('Must be implemented by subclasses.')
 
     @classmethod
-    def _thread(cls):
+    def _thread(cls,frames,keys):
         """Camera background thread."""
         print('Starting camera thread.')
-        frames_iterator = cls.frames()
+        frames_iterator = frames(keys)
+        print('get frames_iterator.')
         for frame in frames_iterator:
-            BaseCamera.frame = frame
-            BaseCamera.event.set()  # send signal to clients
+            BaseCamera.dicts[keys][1] = frame
+            BaseCamera.dicts[keys][3].set()  # send signal to clients
             time.sleep(0)
 
             # if there hasn't been any clients asking for frames in
             # the last 10 seconds then stop the thread
-            if time.time() - BaseCamera.last_access > 10:
+            if time.time() - BaseCamera.dicts[keys][2] > 10:
                 frames_iterator.close()
                 print('Stopping camera thread due to inactivity.')
                 break
-        BaseCamera.thread = None
+        BaseCamera.dicts[keys][0] = None
+        BaseCamera.dicts[keys][1] = None

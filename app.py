@@ -3,15 +3,17 @@ from importlib import import_module
 import os
 from flask import Flask, render_template, Response,url_for, request, session, json, \
 send_from_directory, current_app, g,redirect
-from flask.ext.moment import Moment
+from flask_moment import Moment
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlite import *
+from util import process_config
+config=process_config('config.cfg')
 # import camera driver
 if os.environ.get('CAMERA'):
     Camera = import_module('camera_' + os.environ['CAMERA']).Camera
 else:
-    from client import Camera
+    from base_camera import BaseCamera as  Camera
 
 # Raspberry Pi camera module (requires picamera package)
 # from camera_pi import Camera
@@ -20,7 +22,9 @@ app = Flask(__name__)
 ##############################
 moment = Moment(app)
 app.config['SECRET_KEY'] = 'stevexiaofei@app123456'		
-
+addr=('10.164.33.222',6666)
+addr_default=('0.0.0.0',6666)
+item_list = [addr_default,addr]
 @app.before_request
 def preprocess():
 	g.username = session.get('username')
@@ -47,6 +51,7 @@ def login():
 		query_return=query(user_profile)
 		if query_return==0:
 			session['username'] = username
+			session['stream_idx'] = 0
 			return json.dumps({
 				'success': 'true',
 				'msg': 'Login success!'
@@ -95,10 +100,12 @@ def gen(camera):
 def video_feed():
 	"""Video streaming route. Put this in the src attribute of an img tag."""
 	if request.method == 'GET':
-		return Response(gen(Camera()),
+		print("Response stream_idx",session['stream_idx'])
+		return Response(gen(Camera(item_list[session['stream_idx']])),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 	else:
 		item_idx = int(request.values.get('item_idx'))
+		session['stream_idx'] = item_idx
 		return json.dumps({
 				'success': 'true',
 				'msg': "respose from remote server\n you select the %d item!"%(item_idx,)
@@ -106,4 +113,4 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    app.run(host='202.121.181.3',threaded=True)
+    app.run(host=config['ip'],threaded=True)
