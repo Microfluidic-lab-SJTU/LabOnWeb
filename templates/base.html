@@ -37,6 +37,12 @@
   <body>
 	<!--p> Time {{ moment().format('HH:mm', refresh=True) }}</p-->
     <div class="container">
+		{% for message in get_flashed_messages() %}
+		<div class="alert alert-warning">
+			<button type='button' class="close" data-dismiss='alert'>&times;</button>
+			{{ message }}
+		</div>
+		{% endfor %}
 		<div class="demo-headline">
         <h1 class="demo-logo">
           <div class="logo"></div>

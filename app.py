@@ -2,7 +2,7 @@
 from importlib import import_module
 import os
 from flask import Flask, render_template, Response,url_for, request, session, json, \
-send_from_directory, current_app, g,redirect
+send_from_directory, current_app, g,redirect,flash,get_flashed_messages
 from flask_moment import Moment
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
@@ -24,7 +24,7 @@ moment = Moment(app)
 app.config['SECRET_KEY'] = 'stevexiaofei@app123456'		
 addr=('10.164.33.222',6666)
 addr_default=('0.0.0.0',6666)
-item_list = [addr_default,addr]
+item_list = [addr_default,addr,addr,addr]
 @app.before_request
 def preprocess():
 	g.username = session.get('username')
@@ -101,7 +101,12 @@ def video_feed():
 	"""Video streaming route. Put this in the src attribute of an img tag."""
 	if request.method == 'GET':
 		print("Response stream_idx",session['stream_idx'])
-		return Response(gen(Camera(item_list[session['stream_idx']])),
+		cam = Camera(item_list[session['stream_idx']])
+		if cam.IsServerLive() is False:
+			flash('look like the remote microscope server is closed!')
+			session['stream_idx'] = 0
+			cam = Camera(item_list[session['stream_idx']])
+		return Response(gen(cam),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 	else:
 		item_idx = int(request.values.get('item_idx'))

@@ -1,5 +1,6 @@
 import time
 import threading
+import socket
 from frames import RemoteFrames,SimuFrames
 try:
     from greenlet import getcurrent as get_ident
@@ -53,29 +54,35 @@ class CameraEvent(object):
 
 
 class BaseCamera(object):
-    thread = None  # background thread that reads frames from camera
-    frame = None  # current frame is stored here by background thread
-    last_access = 0  # time of last client access to the camera
-    event = CameraEvent()
+    #thread = None  # background thread that reads frames from camera
+    #frame = None  # current frame is stored here by background thread
+    #last_access = 0  # time of last client access to the camera
+    #event = CameraEvent()
     dicts = {}
     def __init__(self,addr):
         """Start the background camera thread if it isn't running yet."""
         self.addr = addr
-        print('new camera ,',addr)
-        if BaseCamera.dicts.has_key(addr) is False:
-            frame_generator= SimuFrames if addr[0] == '0.0.0.0' else RemoteFrames
-            thread = threading.Thread(target=self._thread,args=(frame_generator,addr))
-            BaseCamera.dicts[addr]=[thread,None,time.time(),CameraEvent()]
-            thread.start()
-            while self.get_frame() is None:
-                time.sleep(0)
-        elif BaseCamera.dicts[addr][0] == None:
-            frame_generator = SimuFrames if addr[0] == '0.0.0.0' else RemoteFrames
-            BaseCamera.dicts[addr][2] = time.time()
-            BaseCamera.dicts[addr][0] = threading.Thread(target=self._thread,args=(frame_generator,addr))
-            BaseCamera.dicts[addr][0].start()
-            while self.get_frame() is None:
-                time.sleep(0)
+        if addr[0] == '0.0.0.0':
+            IsLive = True
+            frame_generator = SimuFrames
+            if BaseCamera.dicts.has_key(addr) is False:
+                thread = threading.Thread(target=self._thread,args=(frame_generator,addr))
+                BaseCamera.dicts[addr]=[thread,None,time.time(),CameraEvent(),IsLive]    
+                thread.start()
+                while self.get_frame() is None:
+                    time.sleep(0)
+        elif BaseCamera.dicts.has_key(addr) is False:
+            IsLive = self.IsRemoteServerLive()
+            if IsLive:
+                thread = threading.Thread(target=self._thread,args=(RemoteFrames,addr))
+                cameraEvent = CameraEvent()
+                BaseCamera.dicts[addr]=[thread,None,time.time(),CameraEvent(),IsLive]
+                thread.start()
+                while self.get_frame() is None:
+                    time.sleep(0)
+            #else:
+                #thread = None; cameraEvent=None
+                #BaseCamera.dicts[addr]=[thread,None,time.time(),cameraEvent,IsLive]
 
     def get_frame(self):
         """Return the current camera frame."""
@@ -86,7 +93,21 @@ class BaseCamera(object):
         BaseCamera.dicts[self.addr][3].clear()
 
         return BaseCamera.dicts[self.addr][1]
-
+    def IsRemoteServerLive(self):
+        timeout = 5
+        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        s.setblocking(True)
+        s.settimeout(timeout)
+        try:
+            s.connect(self.addr)
+        except socket.timeout:
+            return False
+        s.send('exit'.encode())
+        s.close()
+        return True
+    def IsServerLive(self):
+        """The function can only be called onece """
+        return BaseCamera.dicts.has_key(self.addr)
     @staticmethod
     def frames():
         """"Generator that returns frames from the camera."""
@@ -109,5 +130,4 @@ class BaseCamera(object):
                 frames_iterator.close()
                 print('Stopping camera thread due to inactivity.')
                 break
-        BaseCamera.dicts[keys][0] = None
-        BaseCamera.dicts[keys][1] = None
+        del BaseCamera.dicts[keys]
