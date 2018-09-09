@@ -7,11 +7,11 @@
 
     <!-- Loading Bootstrap -->
     <link href="{{ url_for('static', filename = 'dist/css/vendor/bootstrap.min.css') }}" rel="stylesheet">
-
+	
     <!-- Loading Flat UI Pro -->
     <link href="{{ url_for('static', filename = 'dist/css/flat-ui.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename = 'docs/assets/css/demo.css') }}" rel="stylesheet">
-
+	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic|Roboto:400,300,700' >
     <link rel="shortcut icon" href="{{ url_for('static', filename = 'dist/favicon.ico') }}">
 	<style type="text/css">
 		p#greet	{
@@ -63,7 +63,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research</a>
                   <span class="dropdown-arrow"></span>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Project</a></li>
+                    <li><a href="{{ url_for('project')}}">Project</a></li>
                     <li><a href="#">Paper</a></li>
                     <li><a href="https://github.com/Microfluidic-lab-SJTU">Github</a></li>
                     <li class="divider"></li>
@@ -106,7 +106,7 @@
 	
     </div>
 	
-	<footer id="fh5co-footer"  style='padding: 3em 0; text-align: center' width='100%'>
+	<footer id="fh5co-footer"  style='padding: 5em 0; text-align: center' width='100%'>
 		<p><small>&copy; 2018. Microfluidics Lab in SJTU. All Rights Reserverd.</small></p>
     </footer>
 	

@@ -72,7 +72,9 @@ class BaseCamera(object):
                 while self.get_frame() is None:
                     time.sleep(0)
         elif BaseCamera.dicts.has_key(addr) is False:
+
             IsLive = self.IsRemoteServerLive()
+            print("in base camera init")
             if IsLive:
                 thread = threading.Thread(target=self._thread,args=(RemoteFrames,addr))
                 cameraEvent = CameraEvent()
@@ -80,6 +82,8 @@ class BaseCamera(object):
                 thread.start()
                 while self.get_frame() is None:
                     time.sleep(0)
+            else:
+                print("the remote camera server is not opened", self.addr)
             #else:
                 #thread = None; cameraEvent=None
                 #BaseCamera.dicts[addr]=[thread,None,time.time(),cameraEvent,IsLive]
@@ -94,13 +98,20 @@ class BaseCamera(object):
 
         return BaseCamera.dicts[self.addr][1]
     def IsRemoteServerLive(self):
-        timeout = 5
+        timeout = 8
         s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         s.setblocking(True)
         s.settimeout(timeout)
         try:
             s.connect(self.addr)
+        except socket.gaierror:
+            print('socket.gaierror')
+            return False
         except socket.timeout:
+            print('socket.timeout')
+            return False
+        except socket.error:
+            print('socket error')
             return False
         s.send('exit'.encode())
         s.close()

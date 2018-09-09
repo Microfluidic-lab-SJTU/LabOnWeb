@@ -52,7 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
-
+/static/*
 # user define
 __pycache__/
 /flasky/

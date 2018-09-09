@@ -22,9 +22,11 @@ app = Flask(__name__)
 ##############################
 moment = Moment(app)
 app.config['SECRET_KEY'] = 'stevexiaofei@app123456'		
-addr=('10.164.33.222',6666)
+addr1=('10.164.9.18',6666)
+addr2=('172.25.110.3',6666)
+addr3=('219.228.126.106',6666)
 addr_default=('0.0.0.0',6666)
-item_list = [addr_default,addr,addr,addr]
+item_list = [addr_default,addr1,addr2,addr3]
 @app.before_request
 def preprocess():
 	g.username = session.get('username')
@@ -41,6 +43,9 @@ def mission():
 @app.route('/about')
 def about():
 	return render_template('about.html')
+@app.route('/project')
+def project():
+	return render_template('project.html')
 	
 @app.route('/login',methods = [ 'GET', 'POST' ])
 def login():
@@ -102,6 +107,7 @@ def video_feed():
 	if request.method == 'GET':
 		print("Response stream_idx",session['stream_idx'])
 		cam = Camera(item_list[session['stream_idx']])
+		print('ip: ',item_list[session['stream_idx']] )
 		if cam.IsServerLive() is False:
 			flash('look like the remote microscope server is closed!')
 			session['stream_idx'] = 0
@@ -109,7 +115,9 @@ def video_feed():
 		return Response(gen(cam),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 	else:
+		print('video_feed,else')
 		item_idx = int(request.values.get('item_idx'))
+		print('the item idx is ',item_idx)
 		session['stream_idx'] = item_idx
 		return json.dumps({
 				'success': 'true',

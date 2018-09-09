@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block user_defined %}
+	<div class="demo-type-example">
+		<h1 class="demo-section-title">工程项目 </h1>    
+		<div class="row demo-samples" style='padding:50px'>
+			<ul id="videolist" style='font-size:20px' >
+			   <li ><a href='#project1'>线虫轮廓的分割、跟踪及特征提取</a></li> 
+			   <li ><a href='#project2'>基于卷积网络的线虫轮廓的分割</a></li>
+			   <li ><a href='#project3'>基于flask框架的视频流服务器的搭建</a></li>
+			   <li ><a href='#project4'> 语音情感识别研究</a></li>
+			</ul> 
+		</div>
+	</div>
+	<h2 style='font-size:24px' ><a id='project1'>一、 线虫轮廓的分割、跟踪及特征提取</a></h2>
+	<div class="row demo-samples" style='padding:10px'>
+		<p style='text-indent:2em; font-family:arial,sans-serif'> 秀丽隐杆线虫(C. elegans)是一种微米尺度的模式生物，它构造简单只有300多个神经元，且与人类的基因具有60%的同源性。因此
+		在人类的衰老、疾病研究、药物筛选、神经回路等研究中成为非常重要的研究对象。而线虫的
+		体长，摆动频率、运动速度等特征在上述研究中常常作为非常重要的表征手段。线虫轮廓的分割、
+		跟踪以及特征提取是生物医疗图像处理中一个非常重要的问题。</p>
+		<div style="text-align:center;padding:24px">
+		<img src='static/images/flow.jpg' />
+		</div>
+		<p style='text-indent:2em; font-family:arial,sans-serif'>线虫图像处理的流程分为三个阶段：
+		 线虫轮廓的分割、跟踪、及特征提取。线虫的分割采用基于混合高斯的背景减除的方法。对每一个
+		 像素用多个高斯分布来建模，所有高斯分布的权值总和为一。每次读取一帧图像在线更新混合高斯的
+		 模型参数。线虫的跟踪是通过利用线虫轮廓的重心、面积的信息在相邻两帧图像间进行最近邻搜索的方式来
+		 实现(Tracking by segmentation)。通过计算线虫轮廓像素的曲率的方式可以定位到线虫的头部、尾部
+		 再通过轮廓提取算法便可以计算线虫轮廓的中线。利用它可以得到线虫摆动频率、体长及运动速度等生理特征。
+		 <a href='https://github.com/Microfluidic-lab-SJTU/C.-elegans-Tracking-and-Behavioral-Measurement'>[github code]</a></p>
+	</div>
+	<div class="row demo-samples" style="padding:30px">
+		 <p style='font-weight:bold'>线虫图像处理视频1</p>
+          	  <video
+            id="my-player"
+            class="video-js"
+            controls
+            preload="auto"
+            poster="/static/images/worm_image1.jpg"
+            data-setup='{}'>
+            <source src="/static/video/wormtracking.webm" type="video/webm"></source>
+				
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a
+              web browser that
+              <a href="http://videojs.com/html5-video-support/" target="_blank">
+                supports HTML5 video
+              </a>
+            </p>
+          </video>
+     </div>
+	 <div class="row demo-samples" style="padding:30px">
+		  <p style='font-weight:bold'>线虫图像处理视频2</p>
+	
+		  <video
+            id="my-player"
+            class="video-js"
+            controls
+            preload="auto"
+            poster="/static/images/worm_image2.jpg"
+			
+            data-setup='{}'>
+            <source src="/static/video/wormtracking2.webm" type="video/webm"></source>
+            
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a
+              web browser that
+              <a href="http://videojs.com/html5-video-support/" target="_blank">
+                supports HTML5 video
+              </a>
+            </p>
+          </video>
+	 </div>
+	 <h2 style='font-size:24px'><a id='project2'>二、 基于卷积网络的线虫轮廓的分割</a></h2>
+	 <div class="row demo-samples">
+		<p style='text-indent:2em; font-family:arial,sans-serif'>
+			基于背景减除的方法虽然能够对固定背景的视频进行轮廓提取。但该方法鲁棒性不足，很容易受到
+			图像噪声的影响，且线虫通体透明，这些都会导致线虫的轮廓不完整出现断裂。进而导致线虫跟踪失败。
+			U-net在生物医疗图像分割中取得很不错的效果。我们基于u-net网络结构，做了两点改进。第一：
+			用卷积残差网络取代了U-net中的普通卷积模块。第二：在网络的最后引入CRF注意力机制，通过卷积
+			的方式来实现。结果表明改进后的网络与u-net网络相比较在<a href='https://data.broadinstitute.org/bbbc/BBBC010/'>BBBC010数据集上</a>网络预测的像素误差具有10%左右的下降。
+			另外，我们采用<a href='https://is-innovation.eu/ratsnake/'>Ratesnake</a>图像标注工具
+			标注我们采集到的图像，完成数据集的制作，这方面的工作仍在进行中
+			<a href='https://github.com/stevexiaofei/Worm_seg_net/tree/master'>[github code]</a>
+			<div style="margin:14px">
+			<img src='static/images/segmentation.jpg' />
+			</div>
+		</div>
+	 </div>
+	 <h2 style='font-size:24px'><a id='project3'>三、 基于flask框架的实时视频流服务器的搭建</a></h2>
+	 <div class="row demo-samples" style='padding:10px; margin-bottom:5em'>
+		<p style='text-indent:2em; font-family:arial,sans-serif'>在生物医学实验中经常需要对某种微生物或者细胞进行长时间的观察，
+并每间隔一段时间就需要采集一段视频或图像。为了帮助实验人员
+		更有效的观测。我们搭建了一个集用户身份认证、远程观察、数据采集等功能的web服务器。根据CCD厂家提供的API
+		，我们编写了python接口的CCD相机API用于数据的采集。用户通过浏览器通过http协议发送请求，web服务
+		器收到用户请求，并与CCD相机建立TCP连接。通过TCP协议接受图像，最后将图像传回给用户。为了降低
+		数据传输的延迟。我们采用了异步的方式来隐藏数据传输的延迟。
+		<a href='https://github.com/Microfluidic-lab-SJTU/CCD-image-data-acquire-server/tree/master'>[github code1]</a>
+		<a href='https://github.com/Microfluidic-lab-SJTU/LabOnWeb'>[github code2]</a>
+		
+		</p>
+	 </div>
+	 <h2 style='font-size:24px'><a id='project4'>四、 语音情感识别研究</a></h2>
+	 <div class="row demo-samples" style='padding:10px; margin-bottom:5em'>
+		<p style='text-indent:2em; font-family:arial,sans-serif'>由于语音中的包含的情感特征只存在部分语音的片段中，根据情感语音数据的特点，
+在情感分类网络中采用了一种注意力机制。首先从一段语音中提取梅尔频谱特征，可以得到一个特征向量序列，然后经过前馈网络、一维卷积模块、双向LSTM网络、然后采用卷积模块学习到特征序列的
+加权系数对LSTM输出的特征序列进行加权累加，从而可以得到一个特征向量，然后进行softmax分类。
+		<a href='https://github.com/stevexiaofei/Speech-emotion-recognition'>[github code]</a>
+		
+		</p>
+	 </div>
+{% endblock %}
+{% block user_script %}
+<script>
+window.onload = function(){
+	var video = document.getElementById("my-player");
+	var source = document.getElementsByTagName("source");
+	var lis = document.getElementById("videolist");
+	var vLen = lis.length; // 播放列表的长度
+	var url = [];
+	//var ctrl = document.getElementById("playList-hidden");
+	//var ctrl_show = document.getElementById('playList-show1');
+	//var aside = document.getElementById("playList");
+	var curr = 1; // 当前播放的视频
+
+	for(var i=0;i<lis.length;i++){
+		
+			url[i] = lis[i].getAttribute("value");
+			
+	}
+	//alert(lis.length)
+	//绑定单击事件
+	for(var i=0;i<lis.length;i++){
+		
+			lis[i].onclick = function(){
+				for(var j=0;j<lis.length;j++){
+					if(lis[j] == this){
+						source.setAttribute("src",this.getAttribute("value"));
+						video.setAttribute('autoplay','autoplay');
+						this.innerHTML = 'palying '+this.innerHTML;
+						this.className = "select";
+						curr = j+1;
+					}else{
+						lis[j].innerHTML = lis[j].getAttribute("title");
+						lis[j].className = "";
+					}
+				}
+				
+			
+//			console.log(this.getAttribute("value"));  //调试代码
+		}
+			
+	}	
+	source.setAttribute('src',url[0]);
+	lis[0].innerHTML = 'palying '+lis[0].innerHTML;
+	lis[0].className = "select";
+	<!-- //收起播放列表 -->
+	<!-- ctrl.onclick = function(){ -->
+		
+		<!-- aside.style.transition = "1s"; -->
+		<!-- aside.style.transform = "translateX(-10vw)"; -->
+		<!-- setTimeout(function(){ -->
+			<!-- aside.style.display = "none"; -->
+			<!-- ctrl_show.style.visibility= 'visible'; -->
+		<!-- },"1000"); -->
+	
+	<!-- } -->
+	
+	<!-- //展开播放列表 -->
+	<!-- ctrl_show.onclick = function(){ -->
+		<!-- aside.style.display = "block"; -->
+		<!-- ctrl_show.style.visibility= 'hidden'; -->
+		<!-- setTimeout(function(){ -->
+			<!-- aside.style.transform = "translateX(0vw)"; -->
+		<!-- },"0"); -->
+	
+	<!-- } -->
+
+	
+	
+	
+	
+	<!-- video.addEventListener('ended', play); -->
+	<!-- //play(); -->
+	<!-- function play() { -->
+	   <!-- video.src = url[curr]; -->
+	   <!-- video.load(); // 如果短的话，可以加载完成之后再播放，监听 canplaythrough 事件即可 -->
+	   <!-- video.play(); -->
+	   
+	   <!-- for(var j=0;j<lis.length;j++){ -->
+			<!-- if(j == curr){ -->
+				<!-- video.setAttribute("src",lis[j].getAttribute("value")); -->
+				<!-- video.setAttribute('autoplay','autoplay'); -->
+				<!-- lis[j].innerHTML = 'palying '+lis[j].innerHTML; -->
+				<!-- lis[j].className = "select"; -->
+			<!-- }else{ -->
+				<!-- lis[j].innerHTML = lis[j].getAttribute("title"); -->
+				<!-- lis[j].className = ""; -->
+			<!-- } -->
+		<!-- } -->
+	   <!-- curr++; -->
+	   <!-- if (curr >= vLen) curr = 0; // 播放完了，重新播放 -->
+	<!-- } -->
+	
+}
+    </script>
+{% endblock %}
