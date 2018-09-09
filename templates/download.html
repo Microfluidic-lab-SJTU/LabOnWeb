@@ -2,8 +2,14 @@
 
 {% block user_defined %}
 	<div class="demo-type-example">
-	<p>
-	Introduce about our mission . bu la bu la bu la ...................
-	</p>
+	<h1 class="demo-section-title">文件下载 </h1> 
+	<div class="row demo-samples" style='padding:50px'>
+			<ul id="videolist" style='font-size:20px' >
+			   {% for path,d_file,file in Gene.generator() %}
+			   <li ><a href= {{ path|safe }} download={{ d_file }}>{{ file|safe }}</a></li> 
+			
+			   {% endfor%}
+			</ul> 
+	</div> 
 	</div>
 {% endblock %}

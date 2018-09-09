@@ -39,6 +39,18 @@ def postprocess(response):
 @app.route('/mission')
 def mission():
 	return render_template('mission.html')
+
+class down:
+	def __init__(self):
+		self.files=os.listdir(os.path.join('static','Download'))
+	def generator(self):
+		for it in self.files:
+			yield os.path.join('static','Download',it).replace(' ','%20'),it.replace(' ','%20'),it
+@app.route('/download')
+def download():
+	Gene =down()
+	#print(files)
+	return render_template('download.html',Gene=Gene)
 	
 @app.route('/about')
 def about():

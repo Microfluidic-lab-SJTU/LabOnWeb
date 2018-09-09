@@ -16053,3 +16053,71 @@ error: [Errno 32] Broken pipe
 167.114.122.149 - - [09/Sep/2018 10:07:39] "[1m[31m  +&à     Cookie: mstshash=hello[0m" 400 -
 167.114.122.149 - - [09/Sep/2018 15:06:16] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00+&\xe0\x00\x00\x00\x00\x00Cookie:')
 167.114.122.149 - - [09/Sep/2018 15:06:16] "[1m[31m  +&à     Cookie: mstshash=hello[0m" 400 -
+ * Running on http://202.121.181.3:5000/ (Press CTRL+C to quit)
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[37mGET /project HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/docs/assets/css/demo.css HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/docs/assets/js/application.js HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/images/flow.jpg HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/images/segmentation.jpg HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/scripts/flat-ui.js HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/dist/css/vendor/bootstrap.min.css HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/dist/css/flat-ui.css HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/images/worm_image1.jpg HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/images/worm_image2.jpg HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[36mGET /static/dist/fonts/lato/lato-regular.woff HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[37mGET /static/video/wormtracking2.webm HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:22:51] "[37mGET /static/video/wormtracking.webm HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:22:52] "[36mGET /static/dist/fonts/lato/lato-bold.woff HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:52] "[36mGET /static/docs/assets/images/demo/logo-mask.png HTTP/1.1[0m" 304 -
+Traceback (most recent call last):
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 657, in __init__
+    self.finish()
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 716, in finish
+    self.wfile.close()
+  File "/usr/bin/anaconda2/lib/python2.7/socket.py", line 283, in close
+    self.flush()
+  File "/usr/bin/anaconda2/lib/python2.7/socket.py", line 307, in flush
+    self._sock.sendall(view[write_offset:write_offset+buffer_size])
+error: [Errno 32] Broken pipe
+Traceback (most recent call last):
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 657, in __init__
+    self.finish()
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 716, in finish
+    self.wfile.close()
+  File "/usr/bin/anaconda2/lib/python2.7/socket.py", line 283, in close
+    self.flush()
+  File "/usr/bin/anaconda2/lib/python2.7/socket.py", line 307, in flush
+    self._sock.sendall(view[write_offset:write_offset+buffer_size])
+error: [Errno 32] Broken pipe
+10.163.43.110 - - [09/Sep/2018 15:22:52] "[36mGET /static/dist/fonts/glyphicons/flat-ui-pro-icons-regular.woff HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:52] "[36mGET /static/dist/fonts/lato/lato-light.woff HTTP/1.1[0m" 304 -
+10.163.43.110 - - [09/Sep/2018 15:22:52] "[37mGET /static/video/wormtracking.webm HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:22:52] "[37mGET /static/video/wormtracking2.webm HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:22:56] "[37mGET /download HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:23:00] "[37mGET /static/Download/OReilly.Learning.OpenCV.3.2016.12.pdf HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:23:04] "[37mGET /static/Download/OpenCV%20Essentials.pdf HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:23:07] "[37mGET /static/Download/OpenCV%20By%20Example.pdf HTTP/1.1[0m" 200 -
+10.163.43.110 - - [09/Sep/2018 15:23:13] "[37mGET /static/Download/OReilly.Learning.OpenCV.3.2016.12.pdf HTTP/1.1[0m" 200 -
+Traceback (most recent call last):
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 657, in __init__
+    self.finish()
+  File "/usr/bin/anaconda2/lib/python2.7/SocketServer.py", line 716, in finish
+    self.wfile.close()
+  File "/usr/bin/anaconda2/lib/python2.7/socket.py", line 283, in close
+    self.flush()
+  File "/usr/bin/anaconda2/lib/python2.7/socket.py", line 307, in flush
+    self._sock.sendall(view[write_offset:write_offset+buffer_size])
+error: [Errno 32] Broken pipe
+10.163.43.110 - - [09/Sep/2018 15:23:53] "[37mGET /download HTTP/1.1[0m" 200 -
