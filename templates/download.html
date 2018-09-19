@@ -4,12 +4,44 @@
 	<div class="demo-type-example">
 	<h1 class="demo-section-title">文件下载 </h1> 
 	<div class="row demo-samples" style='padding:50px'>
+		<div class="col-6">
+			<h2 class="demo-section-title">图像处理</h2> 
 			<ul id="videolist" style='font-size:20px' >
-			   {% for path,d_file,file in Gene.generator() %}
+			   {% for path,d_file,file in Gene.generator_imageprocess() %}
 			   <li ><a href= {{ path|safe }} download={{ d_file }}>{{ file|safe }}</a></li> 
 			
 			   {% endfor%}
 			</ul> 
+		</div>
+		<div class="col-6">
+			<h2 class="demo-section-title">机器学习</h2> 
+			<ul id="videolist" style='font-size:20px' >
+			   {% for path,d_file,file in Gene.generator_mechinelearning() %}
+			   <li ><a href= {{ path|safe }} download={{ d_file }}>{{ file|safe }}</a></li> 
+			
+			   {% endfor%}
+			</ul> 
+		</div>
+	</div> 
+	<div class="row demo-samples" style='padding:50px'>
+		<div class="col-6">
+			<h2 class="demo-section-title">编程基础</h2> 
+			<ul id="videolist" style='font-size:20px' >
+			   {% for path,d_file,file in Gene.generator_programming() %}
+			   <li ><a href= {{ path|safe }} download={{ d_file }}>{{ file|safe }}</a></li> 
+			
+			   {% endfor%}
+			</ul> 
+		</div>
+		<div class="col-6">
+			<h2 class="demo-section-title">其他</h2> 
+			<ul id="videolist" style='font-size:20px' >
+			   {% for path,d_file,file in Gene.generator_others() %}
+			   <li ><a href= {{ path|safe }} download={{ d_file }}>{{ file|safe }}</a></li> 
+			
+			   {% endfor%}
+			</ul> 
+		</div>
 	</div> 
 	</div>
 {% endblock %}

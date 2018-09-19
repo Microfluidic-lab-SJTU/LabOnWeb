@@ -8,6 +8,9 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlite import *
 from util import process_config
+import sys   
+reload(sys)   
+sys.setdefaultencoding('utf-8')
 config=process_config('config.cfg')
 # import camera driver
 if os.environ.get('CAMERA'):
@@ -42,10 +45,35 @@ def mission():
 
 class down:
 	def __init__(self):
-		self.files=os.listdir(os.path.join('static','Download'))
-	def generator(self):
-		for it in self.files:
-			yield os.path.join('static','Download',it).replace(' ','%20'),it.replace(' ','%20'),it
+		self.imageprocess=os.listdir(os.path.join('static','Download','imageprocess').encode('gbk'))
+		self.imageprocess=[ it.encode('gbk') for it in self.imageprocess]
+		self.mechinelearning=os.listdir(os.path.join('static','Download','mechinelearning').encode('gbk'))
+		self.mechinelearning=[ it.encode('gbk') for it in self.mechinelearning]
+		self.programming=os.listdir(os.path.join('static','Download','programming').encode('gbk'))
+		self.programming=[ it.encode('gbk') for it in self.programming]
+		
+		self.others=os.listdir(os.path.join('static','Download','others').encode('gbk'))
+		self.others=[ it.encode('gbk') for it in self.others]
+	def generator_imageprocess(self):
+		for it in self.imageprocess:
+			yield os.path.join('static','Download','imageprocess',it).decode('gbk').encode('utf-8').replace(' ','%20'),\
+						it.decode('gbk').encode('utf-8').replace(' ','%20'),\
+						it.decode('gbk').encode('utf-8')
+	def generator_mechinelearning(self):
+		for it in self.mechinelearning:
+			yield os.path.join('static','Download','mechinelearning',it).decode('gbk').encode('utf-8').replace(' ','%20'),\
+						it.decode('gbk').encode('utf-8').replace(' ','%20'),\
+						it.decode('gbk').encode('utf-8')
+	def generator_others(self):
+		for it in self.others:
+			yield os.path.join('static','Download','others',it).decode('gbk').encode('utf-8').replace(' ','%20'),\
+						it.decode('gbk').encode('utf-8').replace(' ','%20'),\
+						it.decode('gbk').encode('utf-8')
+	def generator_programming(self):
+		for it in self.programming:
+			yield os.path.join('static','Download','programming',it).decode('gbk').encode('utf-8').replace(' ','%20'),\
+						it.decode('gbk').encode('utf-8').replace(' ','%20'),\
+						it.decode('gbk').encode('utf-8')
 @app.route('/download')
 def download():
 	Gene =down()
