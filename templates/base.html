@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <title> Microfluidics Lab</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Loading Bootstrap -->
     <link href="{{ url_for('static', filename = 'dist/css/vendor/bootstrap.min.css') }}" rel="stylesheet">
-	
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">	
     <!-- Loading Flat UI Pro -->
     <link href="{{ url_for('static', filename = 'dist/css/flat-ui.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename = 'docs/assets/css/demo.css') }}" rel="stylesheet">
@@ -15,27 +16,51 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename = 'dist/favicon.ico') }}">
 	<style type="text/css">
 		p#greet	{
-		  color:white;
+		  color:black;
 		  font-size: 23px;
 		}
 		div#logout {
 			float:right;
+			font-size:20px;
 			border-left:15px;
 			border-right:5px;
+			display:inline;
 		}
 		div#hi {
 			float:left;
 			border-right:15px;
 			height:25px;
-			
+			display:inline;
+			font-size:20px;
 		}
 		div#login {
 			float:right;
+			font-size:20px;
+		}
+		div#userdefined{
+			float:right;
+			width:20%;
+			padding-right:25px;
+			display:inline;
 		}
 	</style>
   </head>
   <body>
 	<!--p> Time {{ moment().format('HH:mm', refresh=True) }}</p-->
+			  <div id="userdefined" >
+					{% if g.username %}
+					<div id='logout'>
+					<a  href="{{ url_for('logout')}}">logout</a>
+					</div>
+					<div id='hi'>
+					<p id="greet" > Hi {{ g.username }} </p>
+					</div>
+					{% else %}
+					<div id='login'>
+					<a href="{{ url_for('login')}}">Please login</a>
+					</div>
+					{% endif %}
+			  </div>
     <div class="container">
 		{% for message in get_flashed_messages() %}
 		<div class="alert alert-warning">
@@ -82,20 +107,7 @@
                   </div>
                 </div>
               </form-->
-			  <div class="user-defined" style='width:30%'>
-					{% if g.username %}
-					<div id='logout'>
-					<a  href="{{ url_for('logout')}}">logout</a>
-					</div>
-					<div id='hi'>
-					<p id="greet" > Hi {{ g.username }} </p>
-					</div>
-					{% else %}
-					<div id='login'>
-					<a href="{{ url_for('login')}}">Please login</a>
-					</div>
-					{% endif %}
-			  </div>
+
             </div><!-- /.navbar-collapse -->
           </nav><!-- /navbar -->
         </div>
